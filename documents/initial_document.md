@@ -50,13 +50,15 @@ Développement en Python en utilisant le framework **[Django](https://www.django
 
 *PS : le framework fonctionne de la même manière que Symfony sur le principe.*
 
+Base de données à définir mais certainement Postgresql.
+
 ### Tests
 Utilisation de **[unittest](https://docs.python.org/3/library/unittest.html)**, inclu dans la librairie standard de Python.
 
 ### CI/CD & deploiement
 Utilisation de **Docker** pour conteneuriser l'application afin de faciliter son déploiement et éviter les problèmes de dépendances.
 
-Utilisation de **[GitHub action](https://github.com/features/actions)** permettant de réaliser des pipelines de déploiement. Le but étant de valider les tests pour ensuite lancer le déploiement de l'image Docker sur le serveur.
+Utilisation de **[GitHub action](https://github.com/features/actions)** permettant de réaliser des pipelines de déploiement. Le but étant de valider les tests pour ensuite lancer le déploiement de l'image Docker sur le serveur (peut-être accompagné d'un outil facilitant cela)
 
 Utilsation d'un Raspberry Pi ou bien d'un cloud provider comme serveur pour le déploiement.
 
@@ -89,3 +91,70 @@ Déploiement en production :
 2. Validation par les membres du projet, intégrations nécessaires **ET** pipeline de déploiement OK
 3. Merge de la branche vers `master`
 4. Pipeline master assurant le déploiement sur le serveur
+
+---
+
+L'idée étant que la branche `dev` n'a pas forcément besoin d'être fonctionnelle, cependant la branche `master` devra l'être tout le temps.
+
+### Déploiement
+*Procédure susceptible de changer.*
+
+Pour le déploiement nous devrons dans un premier temps construire une image Docker pour notre application web. Pour ensuite créer un docker-composer assez simple avec notre image de l'application web et une image de la database (directement pull du [docker-hub](https://hub.docker.com/_/postgres)).
+
+Ensuite il faudra mettre en place une pipeline se déclanchant lors d'un merge vers `master`. Elle devra réaliser les étapes suivantes :
+
+1. Connexion au serveur
+2. `git pull` de la nouvelle version du projet sur `master`
+3. `docker build` de l'image docker
+4. Lancement du docker-compose (forcer le rebuild)
+5. Nouvelle version prête !
+
+*Posibilité d'utilisé un outil facilitant cela, par example [Capistrano](https://capistranorb.com/). Le choix sera laissé à Younes.*
+
+## Cahier des charges fonctionnel (simplifié)
+*Première version définissant les grandes lignes des fonctionnalités.*
+
+### Ecrans
+
+**Vues :**
+1. **Authentification**
+
+Page de login classique avant de pouvoir accéder au site.
+
+2. **Profil**
+
+Vue du profil affichant les informations de l'utilisateur, possibilité d'ajouter des fonctionnalités futures comme la liste des documents sauvegardé, l'historique d'ajout des documents, etc..
+
+3. **Page d'accueil (avec recherche)**
+
+Page d'accueil épurée expliquant brièvement le concept du site, avec un champ de recherche classique redirigeant vers l'écran 4.
+
+4. **Recherche classique + arborescence (dossiers)**
+
+Champ de recherche, possibilité de filtrer et/ou trier la recherche (type, tags, date). Les résultats seront affichés avec leurs chemins d'accès (example : `nature/ciel/sunset.png`). Possibilité de cliquer ensuite sur le doc pour accéder à la vue détaillée de ce dernier.
+
+Avant l'affichage des résultats on affichera tous les fichiers/dossiers présent à la racine de l'application, dans lesquels on pourra naviguer affichant les fichiers/dossiers présent dans ces derniers (à la manière d'un explorateur de fichiers classique).
+
+5. **Vue détaillée du document/fichier**
+
+Affichage des informations du fichier, et aperçu si possible. Possibilité de télécharger et d'imprimer le fichier.
+
+6. **Gestion des utilisateurs**
+
+Pour les admins, page affichant la liste des utilisateurs, et champs de recherche si possible.
+
+**CRUD :**
+
+*Possibilité de créer, lire, modifier et supprimer les éléments suivants :*
+
+- dossier (écran n°4)
+- tag (écran n°4)
+- utilisateur (pour admin dans l'écran n°6)
+- document (écran n°4 et 5)
+
+### Modèle de données
+*Susceptible d'évoluer au cours du projet.*
+
+![data model](../assets/data_model.png "Data model")
+
+Nous pourrons utiliser ce modèle pour implémenter la partie *"Model"* de l'application.
