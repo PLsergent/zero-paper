@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css?family=Numans');
+{% load static %}
+html,body{
+/*background-image: url('http://getwallpapers.com/wallpaper/full/a/5/d/544750.jpg');*/
+background-image: url('{% static "images/tropical" %}');
+
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;
+height: 100%;
+font-family: 'Numans', sans-serif;
+}
+
+.container{
+height: 100%;
+align-content: center;
+}
+
+.card{
+height: 420px;
+margin-top: 280px;
+margin-bottom: auto;
+width: 400px;
+background-color: rgba(0,0,0,0.5) !important;
+}
+
+.card-header {
+	margin-top: 15px;
+}
+.card-header h3{
+color: white;
+}
+
+.social_icon{
+position: absolute;
+right: 20px;
+top: -45px;
+}
+
+.input-group-prepend span{
+width: 50px;
+background-color: #dda15e;
+color: black;
+border:0 !important;
+}
+
+.login_btn{
+color: black;
+background-color: #dda15e;
+width: 150px;
+}
+
+.login_btn:hover{
+color: black;
+background-color: white;
+}
+
+.links{
+color: white;
+}
+
+.links a{
+margin-left: 4px;
+}
+
+
+.logo{
+
+	height: 150px;
+}
