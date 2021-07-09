@@ -11,7 +11,5 @@ jobs:
       - name: build docker-compose
         run: docker-compose build
       - name: run docker-compose
-        run: docker-compose up
-
-      
-      - run: echo "connexion serveur, suppr repo existant, clone repo, build docker-compose, docker-compose up"
+        run: docker-compose up -d
+        
