@@ -1,0 +1,9 @@
+{# HOMEPAGE #}
+{% extends '../zero_paper/base.html' %}
+
+{% load static %}
+
+
+{% block content %}
+ <a href="{% url 'logout' %}?next=/" class="btn mt-2 mb-1 ml-1" style="color: white">Logout <i class="fas fa-sign-out-alt"></i></a>
+{% endblock %}

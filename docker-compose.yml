@@ -1,0 +1,19 @@
+version: "3.7"
+   
+services:
+  db:
+    image: postgres
+    volumes:
+      - ../data/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB='zero_paper'
+      - POSTGRES_USER='adminuser'
+      - POSTGRES_PASSWORD='adminuser!!!'
+  web:
+    build: .
+    volumes:
+      - .:/zero_paper
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
